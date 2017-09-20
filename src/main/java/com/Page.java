@@ -4,23 +4,35 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
-public class Page {
+import java.util.List;
 
-    private static WebDriver driver;
+class Page {
 
-    static WebDriver getBrowser() throws Throwable {
+    private  WebDriver driver;
+
+    private List<WebElement> webElements;
+
+    Page(WebDriver driver, List<WebElement> webElements) throws Throwable {
+        this.driver = driver;
+        this.webElements = webElements;
+    }
+
+    private WebDriver getBrowser() throws Throwable {
         if(driver == null) {
             driver = ChromeBrowser.buildChromeBrowser();
         }
         return driver;
     }
 
-    public void openPageWithUrl(String url) {
-        driver.navigate().to("file:///Users/44022649/Desktop/varioous/tryHtml1.html");
+    void openPageWithUrl(String url) {
+        driver.navigate().to(url);
     }
 
-
-    public WebElement createElement(String dataElement) {
-        return driver.findElement(By.cssSelector(dataElement));
+    void addElementsToThePage(String url, String webElementName, String cellValue) {
+        openPageWithUrl(url);
+        System.out.println("Element name " + webElementName);
+        WebElement webElement = driver.findElement(By.name(webElementName));
+        webElement.sendKeys(cellValue);
+        webElements.add(webElement);
     }
 }

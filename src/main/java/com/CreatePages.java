@@ -2,32 +2,39 @@ package com;
 
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class CreatePages {
 
-    public List<Page> createPagesFromSheet(XSSFWorkbook wb) {
+    public List<Page> createPagesFromSheet(XSSFWorkbook wb) throws Throwable {
         int sheets = wb.getNumberOfSheets();
 
         List<Page> pages = new ArrayList<Page>();
+        WebDriver driver = ChromeBrowser.buildChromeBrowser();
+        List<WebElement> elements = new ArrayList<WebElement>();
         for (int i = 0; i < sheets; i++) {
-            pages.add(new Page());
+            pages.add(new Page(driver, elements));
         }
         return pages;
     }
 
-    public void buildPageElements(XSSFWorkbook wb, List<Page> pages) {
+    public void buildPageElements(String url, XSSFWorkbook wb, List<Page> pages) throws Throwable {
         for (int i = 0; i < pages.size(); i++) {
             Page page = pages.get(i);
-            createThePageModel(wb.getSheetAt(i), page);
+            createThePageModel(url, wb.getSheetAt(i), page);
         }
     }
 
-    private void createThePageModel(XSSFSheet xs, Page page) {
-        for (int i = 0; i < xs.getLastRowNum(); i++) {
-            page.createElement(xs.getRow(0).getCell(i).getStringCellValue());
+    private void createThePageModel(String url, XSSFSheet xs, Page page) throws Throwable {
+        for (int i = 0; i <= xs.getLastRowNum(); i++) {
+            System.out.println("Last Row Nuber " + xs.getLastRowNum());
+            String webElementName = xs.getRow(0).getCell(i).getStringCellValue();
+            String cellValue = xs.getRow(1).getCell(i).getStringCellValue();
+            page.addElementsToThePage(url, webElementName, cellValue);
         }
     }
 }
