@@ -3,6 +3,8 @@ package com;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.util.List;
 
@@ -28,11 +30,14 @@ class Page {
         driver.navigate().to(url);
     }
 
-    void addElementsToThePage(String url, String webElementName, String cellValue) {
-        openPageWithUrl(url);
-        System.out.println("Element name " + webElementName);
+    void addElementsToThePage(String webElementName, String cellValue) {
         WebElement webElement = driver.findElement(By.name(webElementName));
         webElement.sendKeys(cellValue);
         webElements.add(webElement);
+    }
+
+    void waitFor(WebElement element) {
+        WebDriverWait wait = new WebDriverWait(driver, 3);
+        wait.until(ExpectedConditions.visibilityOf(element));
     }
 }

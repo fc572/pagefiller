@@ -25,16 +25,17 @@ public class CreatePages {
     public void buildPageElements(String url, XSSFWorkbook wb, List<Page> pages) throws Throwable {
         for (int i = 0; i < pages.size(); i++) {
             Page page = pages.get(i);
-            createThePageModel(url, wb.getSheetAt(i), page);
+            page.openPageWithUrl(url);
+            createThePageModel(wb.getSheetAt(i), page);
         }
     }
 
-    private void createThePageModel(String url, XSSFSheet xs, Page page) throws Throwable {
+    private void createThePageModel(XSSFSheet xs, Page page) throws Throwable {
         for (int i = 0; i <= xs.getLastRowNum(); i++) {
-            System.out.println("Last Row Nuber " + xs.getLastRowNum());
             String webElementName = xs.getRow(0).getCell(i).getStringCellValue();
             String cellValue = xs.getRow(1).getCell(i).getStringCellValue();
-            page.addElementsToThePage(url, webElementName, cellValue);
+            System.out.println("webElementName " + webElementName + " cellValue " + cellValue);
+            page.addElementsToThePage(webElementName, cellValue);
         }
     }
 }

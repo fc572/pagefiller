@@ -31,7 +31,7 @@ public class ApplicationTest {
 
     @Test
     public void haveIGotElements() throws Throwable {
-        String path = "src/test/resources/testData/new_customers.xlsx";
+        String path = "src/main/resources/data/new_customers.xlsx";
         String url = "file:///Users/44022649/Desktop/varioous/tryHtml1.html";
 
         Openfile openfile = new Openfile();
@@ -39,9 +39,6 @@ public class ApplicationTest {
 
         CreatePages createPages = new CreatePages();
         List<Page> pages = createPages.createPagesFromSheet(wb);
-        System.out.println("PAGES " + pages);
-        System.out.println("*************************");
-        System.out.println("PAGE " + pages.get(0));
         createPages.buildPageElements(url, wb, pages);
 
         System.out.println(pages.get(0));
