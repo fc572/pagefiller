@@ -32,19 +32,17 @@ public class Openfile {
     }
 
 
-    public String getTheCellValueFromWorkBook(XSSFWorkbook wb, int row, int cell) {
+    public String getTheCellValueFromWorkBook(XSSFWorkbook wb, int sheet, int row, int cell) {
         try {
-             Sheet sh1 = wb.getSheetAt(0);
-
-            //System.out.println(sh1.getRow(row).getCell(cell).getStringCellValue());
+             Sheet sh1 = wb.getSheetAt(sheet);
             return sh1.getRow(row).getCell(cell).getStringCellValue();
         } catch (Exception e) {
             return e.getMessage();
         }
     }
 
-    public String readFromFile(String path, int row, int cell) {
+    public String readFromFile(String path, int sheet, int row, int cell) {
         XSSFWorkbook wb = openFileAtLocation(path);
-        return getTheCellValueFromWorkBook(wb, row, cell);
+        return getTheCellValueFromWorkBook(wb, sheet, row, cell);
     }
 }

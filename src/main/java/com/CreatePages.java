@@ -22,18 +22,18 @@ public class CreatePages {
         return pages;
     }
 
-    public void buildPageElements(String url, XSSFWorkbook wb, List<Page> pages) throws Throwable {
+    public void buildPageElements(XSSFWorkbook wb, List<Page> pages) throws Throwable {
         for (int i = 0; i < pages.size(); i++) {
             Page page = pages.get(i);
-            page.openPageWithUrl(url);
             createThePageModel(wb.getSheetAt(i), page);
         }
     }
 
     private void createThePageModel(XSSFSheet xs, Page page) throws Throwable {
-        for (int i = 0; i <= xs.getLastRowNum(); i++) {
-            String webElementName = xs.getRow(0).getCell(i).getStringCellValue();
-            String cellValue = xs.getRow(1).getCell(i).getStringCellValue();
+        page.openPageWithUrl(xs.getRow(0).getCell(1).getStringCellValue());
+        for (int i = 1; i < xs.getLastRowNum(); i++) {
+            String webElementName = xs.getRow(4).getCell(i).getStringCellValue();
+            String cellValue = xs.getRow(5).getCell(i).getStringCellValue();
             System.out.println("webElementName " + webElementName + " cellValue " + cellValue);
             page.addElementsToThePage(webElementName, cellValue);
         }
