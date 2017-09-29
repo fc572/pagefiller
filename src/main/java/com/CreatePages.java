@@ -8,9 +8,9 @@ import org.openqa.selenium.WebElement;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CreatePages {
+class CreatePages {
 
-    public List<Page> createPagesFromSheet(XSSFWorkbook wb) throws Throwable {
+    List<Page> createPagesFromSheet(XSSFWorkbook wb) throws Throwable {
         int sheets = wb.getNumberOfSheets();
 
         List<Page> pages = new ArrayList<Page>();
@@ -22,7 +22,7 @@ public class CreatePages {
         return pages;
     }
 
-    public void buildPageElements(XSSFWorkbook wb, List<Page> pages) throws Throwable {
+    void buildPageElements(XSSFWorkbook wb, List<Page> pages) throws Throwable {
         for (int i = 0; i < pages.size(); i++) {
             Page page = pages.get(i);
             createThePageModel(wb.getSheetAt(i), page);
@@ -31,11 +31,13 @@ public class CreatePages {
 
     private void createThePageModel(XSSFSheet xs, Page page) throws Throwable {
         page.openPageWithUrl(xs.getRow(0).getCell(1).getStringCellValue());
-        for (int i = 1; i < xs.getLastRowNum(); i++) {
-            String webElementName = xs.getRow(4).getCell(i).getStringCellValue();
-            String cellValue = xs.getRow(5).getCell(i).getStringCellValue();
+        int numberOfColumns = xs.getRow(3).getLastCellNum();
+        for (int i = 1; i < numberOfColumns; i++) {
+            String selectorType = xs.getRow(2).getCell(i).getStringCellValue();
+            String webElementName = xs.getRow(3).getCell(i).getStringCellValue();
+            String cellValue = xs.getRow(4).getCell(i).getStringCellValue();
             System.out.println("webElementName " + webElementName + " cellValue " + cellValue);
-            page.addElementsToThePage(webElementName, cellValue);
+            page.addElementsToThePage(selectorType, webElementName, cellValue);
         }
     }
 }

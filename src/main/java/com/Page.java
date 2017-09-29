@@ -31,9 +31,24 @@ class Page {
         driver.navigate().to(url);
     }
 
-    void addElementsToThePage(String webElementName, String cellValue) {
-        List<WebElement>  webElements = driver.findElements(By.name(webElementName));
-
+    void addElementsToThePage(String selectoryType, String webElementName, String cellValue) {
+        List<WebElement> webElements;
+        switch (selectoryType){
+            case "id":
+                webElements = driver.findElements(By.id(webElementName));
+                break;
+            case "name":
+                webElements = driver.findElements(By.name(webElementName));
+                break;
+            case "css":
+                webElements = driver.findElements(By.cssSelector(webElementName));
+                break;
+            case "className":
+                webElements = driver.findElements(By.className(webElementName));
+                break;
+            default:
+                webElements = driver.findElements(By.id(webElementName));
+        }
 
         for (WebElement element:webElements) {
             System.out.println("TYPE OF ATTRIBUTE " + element.getAttribute("type"));
@@ -46,6 +61,8 @@ class Page {
                 if (element.getAttribute("value").equalsIgnoreCase(cellValue)) {
                     element.click();
                 }
+            } else if (type.equalsIgnoreCase("submit")) {
+                element.click();
             } else {
                 element.sendKeys(cellValue);
             }
@@ -60,5 +77,9 @@ class Page {
 
     List<WebElement> getElements() {
         return pageElements;
+    }
+
+    void close() {
+        driver.close();
     }
 }

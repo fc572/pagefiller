@@ -8,9 +8,10 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
-public class Openfile {
+class Openfile {
 
-    public XSSFWorkbook openFileAtLocation(String path) {
+    XSSFWorkbook openFileAtLocation(String path) {
+        System.out.println("PATH " + path);
         XSSFWorkbook wb = null;
         // Specify the path of file
         File src = new File(path);
@@ -32,7 +33,7 @@ public class Openfile {
     }
 
 
-    public String getTheCellValueFromWorkBook(XSSFWorkbook wb, int sheet, int row, int cell) {
+    private String getTheCellValueFromWorkBook(XSSFWorkbook wb, int sheet, int row, int cell) {
         try {
              Sheet sh1 = wb.getSheetAt(sheet);
             return sh1.getRow(row).getCell(cell).getStringCellValue();
@@ -41,7 +42,7 @@ public class Openfile {
         }
     }
 
-    public String readFromFile(String path, int sheet, int row, int cell) {
+    String readFromFile(String path, int sheet, int row, int cell) {
         XSSFWorkbook wb = openFileAtLocation(path);
         return getTheCellValueFromWorkBook(wb, sheet, row, cell);
     }
