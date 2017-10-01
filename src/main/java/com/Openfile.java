@@ -1,6 +1,6 @@
 package com;
 
-import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 import java.io.File;
@@ -35,7 +35,7 @@ class Openfile {
 
     private String getTheCellValueFromWorkBook(XSSFWorkbook wb, int sheet, int row, int cell) {
         try {
-             Sheet sh1 = wb.getSheetAt(sheet);
+            XSSFSheet sh1 = wb.getSheetAt(sheet);
             return sh1.getRow(row).getCell(cell).getStringCellValue();
         } catch (Exception e) {
             return e.getMessage();
