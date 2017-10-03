@@ -1,4 +1,0 @@
-Manifest-Version: 1.0
-Main-Class: com.Application
-Class-Path: lib/poi-ooxml-3.9.jar
-
