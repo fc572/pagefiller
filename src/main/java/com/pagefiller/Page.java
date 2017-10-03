@@ -27,51 +27,53 @@ class Page {
         return driver;
     }
 
-    void openPageWithUrl(String url) {
+    void openPageWithUrl(String url) throws InterruptedException {
         driver.navigate().to(url);
     }
 
-    void addElementsToThePage(String selectoryType, String webElementName, String cellValue) {
-        List<WebElement> webElements;
+    void addElementToThePage(String selectoryType, String webElementName, String cellValue) {
+        WebElement webElement;
+
         switch (selectoryType){
             case "id":
-                webElements = driver.findElements(By.id(webElementName));
+                webElement = driver.findElement(By.id(webElementName));
                 break;
             case "name":
-                webElements = driver.findElements(By.name(webElementName));
+                webElement = driver.findElement(By.name(webElementName));
                 break;
             case "css":
-                webElements = driver.findElements(By.cssSelector(webElementName));
+                webElement = driver.findElement(By.cssSelector(webElementName));
                 break;
             case "className":
-                webElements = driver.findElements(By.className(webElementName));
+                webElement = driver.findElement(By.className(webElementName));
                 break;
             default:
-                webElements = driver.findElements(By.id(webElementName));
+                webElement = driver.findElement(By.id(webElementName));
         }
-
-        for (WebElement element:webElements) {
-            System.out.println("TYPE OF ATTRIBUTE " + element.getAttribute("type"));
-            String type = element.getAttribute("type");
+            String type = webElement.getAttribute("type");
 
             if(type.equalsIgnoreCase("select-one")){
-                Select dropdown = new Select(element);
+                waitFor(webElement);
+                Select dropdown = new Select(webElement);
                 dropdown.selectByVisibleText(cellValue);
             } else if (type.equalsIgnoreCase("radio") || type.equalsIgnoreCase("checkbox") ) {
-                if (element.getAttribute("value").equalsIgnoreCase(cellValue)) {
-                    element.click();
+                if (webElement.getAttribute("value").equalsIgnoreCase(cellValue)) {
+                    waitFor(webElement);
+                    webElement.click();
                 }
             } else if (type.equalsIgnoreCase("submit")) {
-                element.click();
+                waitFor(webElement);
+                webElement.click();
             } else {
-                element.sendKeys(cellValue);
+                waitFor(webElement);
+                webElement.click();
+                webElement.sendKeys(cellValue);
             }
-            pageElements.add(element);
-        }
+            pageElements.add(webElement);
     }
 
     void waitFor(WebElement element) {
-        WebDriverWait wait = new WebDriverWait(driver, 3);
+        WebDriverWait wait = new WebDriverWait(driver, 5);
         wait.until(ExpectedConditions.visibilityOf(element));
     }
 

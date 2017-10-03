@@ -42,7 +42,7 @@ public class ApplicationTest {
 
     @Test
     public void haveIGotElements() throws Throwable {
-        String path = "src/test/resources/testData/new_customers.xlsx";
+        String path = "src/main/resources/data/fc572.xlsx";
 
         Openfile openfile = new Openfile();
         XSSFWorkbook wb = openfile.openFileAtLocation(path);
@@ -58,6 +58,8 @@ public class ApplicationTest {
                 System.out.println("PAGE ELEM " + elem.toString());
             }
         }
+
+        Assert.assertTrue(pages.size() > 0);
         pages.get(0).close();
     }
 }
