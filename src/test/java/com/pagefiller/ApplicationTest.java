@@ -42,7 +42,7 @@ public class ApplicationTest {
 
     @Test
     public void haveIGotElements() throws Throwable {
-        String path = "src/main/resources/data/fc572.xlsx";
+        String path = "src/test/resources/testData/new_customers.xlsx";
 
         Openfile openfile = new Openfile();
         XSSFWorkbook wb = openfile.openFileAtLocation(path);
