@@ -58,7 +58,6 @@ class Page {
                 dropdown.selectByVisibleText(cellValue);
             } else if (type.equalsIgnoreCase("radio") || type.equalsIgnoreCase("checkbox") ) {
                 if (webElement.getAttribute("value").equalsIgnoreCase(cellValue)) {
-                    waitFor(webElement);
                     webElement.click();
                 }
             } else if (type.equalsIgnoreCase("submit")) {
