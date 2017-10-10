@@ -11,7 +11,6 @@ import java.io.IOException;
 class Openfile {
 
     XSSFWorkbook openFileAtLocation(String path) {
-        System.out.println("PATH " + path);
         XSSFWorkbook wb = null;
         // Specify the path of file
         File src = new File(path);

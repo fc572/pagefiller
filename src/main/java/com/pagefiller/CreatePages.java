@@ -36,7 +36,7 @@ class CreatePages {
             String selectorType = xs.getRow(2).getCell(i).getStringCellValue();
             String webElementName = xs.getRow(3).getCell(i).getStringCellValue();
             String cellValue = xs.getRow(4).getCell(i).getStringCellValue();
-            System.out.println("webElementName " + webElementName + " cellValue " + cellValue);
+            //System.out.println("webElementName " + webElementName + " cellValue " + cellValue);
             page.addElementToThePage(selectorType, webElementName, cellValue);
         }
     }

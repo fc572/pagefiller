@@ -7,7 +7,6 @@ import java.util.List;
 public class Application {
 
     public static void main(String[] args) throws Throwable {
-        System.out.println("bbbbb " + args[0]);
         Openfile openfile = new Openfile();
         XSSFWorkbook wb = openfile.openFileAtLocation(args[0]);
 
