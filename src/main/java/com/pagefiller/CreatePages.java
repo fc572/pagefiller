@@ -30,7 +30,10 @@ class CreatePages {
     }
 
     private void createThePageModel(XSSFSheet xs, Page page) throws Throwable {
-        page.openPageWithUrl(xs.getRow(0).getCell(1).getStringCellValue());
+        String url = xs.getRow(0).getCell(1).getStringCellValue().trim();
+        if(!url.isEmpty()){
+            page.openPageWithUrl(url);
+        }
         int numberOfColumns = xs.getRow(3).getLastCellNum();
         for (int i = 1; i < numberOfColumns; i++) {
             String selectorType = xs.getRow(2).getCell(i).getStringCellValue();
