@@ -28,7 +28,11 @@ class Page {
     }
 
     void openPageWithUrl(String url) throws InterruptedException {
-        driver.navigate().to(url);
+        try {
+            driver.navigate().to(url);
+        } catch (Exception invalidURL) {
+            System.out.println("The supplied URL is invalid ");
+        }
     }
 
     void addElementToThePage(String selectoryType, String webElementName, String cellValue) {

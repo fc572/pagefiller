@@ -30,9 +30,14 @@ class CreatePages {
     }
 
     private void createThePageModel(XSSFSheet xs, Page page) throws Throwable {
-        String url = xs.getRow(1).getCell(0).getStringCellValue().trim();
-        if(!url.isEmpty()){
-            page.openPageWithUrl(url);
+        String url;
+        try {
+            url = xs.getRow(1).getCell(0).getStringCellValue().trim();
+            if (!url.trim().isEmpty()) {
+                page.openPageWithUrl(url);
+            }
+        } catch (Exception nullValue) {
+            System.out.println("The url in Column A row 2 on sheet " + xs.getSheetName() + " hasn't got a value, probably this intentional.");
         }
         int numberOfRows = xs.getLastRowNum();
 
