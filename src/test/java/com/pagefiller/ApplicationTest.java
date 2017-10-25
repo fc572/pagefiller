@@ -3,26 +3,26 @@ package com.pagefiller;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.junit.Assert;
 import org.junit.Test;
-import org.openqa.selenium.WebElement;
 
 import java.util.List;
 
 public class ApplicationTest {
 
+    final private String TESTDATAXLSX = "src/test/resources/testData/testData.xlsx";
+
     @Test
     public void isFileOpen(){
         String path = "src/test/resources/testData/new_customers.xlsx";
         Openfile openfile = new Openfile();
-        Assert.assertFalse(openfile.readFromFile(path, 0, 0,0).isEmpty());
-        System.out.println(openfile.readFromFile(path, 0, 0, 0));
+        Assert.assertFalse(openfile.readFromFile(TESTDATAXLSX, 0, 0,0).isEmpty());
+        System.out.println(openfile.readFromFile(TESTDATAXLSX, 0, 0, 0));
     }
 
 
     @Test
     public void doIhaveTheCorrectNumberOfPages() throws Throwable {
-        String path = "src/test/resources/testData/new_customers.xlsx";
         Openfile openfile = new Openfile();
-        XSSFWorkbook wb = openfile.openFileAtLocation(path);
+        XSSFWorkbook wb = openfile.openFileAtLocation(TESTDATAXLSX);
 
         CreatePages createPages = new CreatePages();
         List<Page> pages = createPages.createPagesFromSheet(wb);
@@ -34,30 +34,19 @@ public class ApplicationTest {
 
     @Test
     public void whatIsTheNumberOfColumnsInTheSheet() {
-        String path = "src/test/resources/testData/new_customers.xlsx";
         Openfile openfile = new Openfile();
-        XSSFWorkbook wb = openfile.openFileAtLocation(path);
+        XSSFWorkbook wb = openfile.openFileAtLocation(TESTDATAXLSX);
         System.out.println("getLastCellNum " + wb.getSheetAt(0).getRow(3).getLastCellNum());
     }
 
     @Test
     public void haveIGotElements() throws Throwable {
-        String path = "/Users/44022649/Downloads/cc-uk-ntb.xlsx";
-
         Openfile openfile = new Openfile();
-        XSSFWorkbook wb = openfile.openFileAtLocation(path);
+        XSSFWorkbook wb = openfile.openFileAtLocation(TESTDATAXLSX);
 
         CreatePages createPages = new CreatePages();
         List<Page> pages = createPages.createPagesFromSheet(wb);
         createPages.buildPageElements(wb, pages);
-
-        for (Page page: pages) {
-            List<WebElement> elements = page.getElements();
-
-            for (WebElement elem : elements) {
-                System.out.println("PAGE ELEM " + elem.toString());
-            }
-        }
 
         Assert.assertTrue(pages.size() > 0);
         pages.get(0).close();

@@ -32,33 +32,38 @@ class Page {
     }
 
     void addElementToThePage(String selectoryType, String webElementName, String cellValue) {
+        List<WebElement> webElements;
         WebElement webElement;
+        String type;
 
         switch (selectoryType){
             case "id":
-                webElement = driver.findElement(By.id(webElementName));
+                webElements = driver.findElements(By.id(webElementName));
                 break;
             case "name":
-                webElement = driver.findElement(By.name(webElementName));
+                webElements = driver.findElements(By.name(webElementName));
                 break;
             case "css":
-                webElement = driver.findElement(By.cssSelector(webElementName));
+                webElements = driver.findElements(By.cssSelector(webElementName));
                 break;
             case "className":
-                webElement = driver.findElement(By.className(webElementName));
+                webElements = driver.findElements(By.className(webElementName));
                 break;
             default:
-                webElement = driver.findElement(By.id(webElementName));
+                webElements = driver.findElements(By.id(webElementName));
         }
-            String type = webElement.getAttribute("type");
+            webElement = webElements.get(0);
+            type = webElement.getAttribute("type");
 
             if(type.equalsIgnoreCase("select-one")){
                 waitFor(webElement);
                 Select dropdown = new Select(webElement);
                 dropdown.selectByVisibleText(cellValue);
             } else if (type.equalsIgnoreCase("radio") || type.equalsIgnoreCase("checkbox") ) {
-                if (webElement.getAttribute("value").equalsIgnoreCase(cellValue)) {
-                    webElement.click();
+                for (WebElement element : webElements) {
+                    if (element.getAttribute("value").equalsIgnoreCase(cellValue)) {
+                        element.click();
+                    }
                 }
             } else if (type.equalsIgnoreCase("submit")) {
                 waitFor(webElement);

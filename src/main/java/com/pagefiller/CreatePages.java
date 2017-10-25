@@ -30,16 +30,16 @@ class CreatePages {
     }
 
     private void createThePageModel(XSSFSheet xs, Page page) throws Throwable {
-        String url = xs.getRow(0).getCell(1).getStringCellValue().trim();
+        String url = xs.getRow(1).getCell(0).getStringCellValue().trim();
         if(!url.isEmpty()){
             page.openPageWithUrl(url);
         }
-        int numberOfColumns = xs.getRow(3).getLastCellNum();
-        for (int i = 1; i < numberOfColumns; i++) {
-            String selectorType = xs.getRow(2).getCell(i).getStringCellValue();
-            String webElementName = xs.getRow(3).getCell(i).getStringCellValue();
-            String cellValue = xs.getRow(4).getCell(i).getStringCellValue();
-            //System.out.println("webElementName " + webElementName + " cellValue " + cellValue);
+        int numberOfRows = xs.getLastRowNum();
+
+        for (int i = 1; i <= numberOfRows; i++) {
+            String selectorType = xs.getRow(i).getCell(2).getStringCellValue();
+            String webElementName = xs.getRow(i).getCell(3).getStringCellValue();
+            String cellValue = xs.getRow(i).getCell(4).getStringCellValue();
             page.addElementToThePage(selectorType, webElementName, cellValue);
         }
     }
