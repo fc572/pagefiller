@@ -11,6 +11,11 @@ public class ApplicationTest {
     final private String TESTDATAXLSX = "src/test/resources/testData/testData.xlsx";
 
     @Test
+    public void findWhichOsIsRunningMe() {
+        System.out.println(System.getProperty("os.name"));
+    }
+
+    @Test
     public void isFileOpen(){
         String path = "src/test/resources/testData/new_customers.xlsx";
         Openfile openfile = new Openfile();
